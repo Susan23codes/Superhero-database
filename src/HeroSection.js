@@ -14,14 +14,12 @@ export default function HeroSection() {
     function handleSubmit(e) {
         e.preventDefault()
         setError(null)
-        axios.get("https://superheroapi.com/api/5957411374291477/search/superman", {
-            // headers: { 'Access-control-request-origin': "localhost:3000",
-            //             'Access-Control-Request-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-            //              },
+        axios.get(`https://superheroapi.com/api/5957411374291477/search/${superheroChoice}`, {
+            
         }
         )
             .then((res) => {
-                let results = (res.name)
+                let results = (res)
                 console.log(results)
 
             })
@@ -29,15 +27,24 @@ export default function HeroSection() {
                 setError(error.message)
             })
     }
+
+    function handleChange(e) {
+        let modifiedSearchTerm = e.target.value.toLowerCase().replace(' ', '_')
+        console.log(modifiedSearchTerm)
+        if (modifiedSearchTerm === 'spiderman') {
+            modifiedSearchTerm = 'spider-man'
+        }
+        setSuperheroChoice(modifiedSearchTerm)
+    }
     return (
         <>
             <div className="Hero">
                 <h2>Holy Alter Ego, 
-                    Batman!  Search a superhero to find out his secret identity and other facts!</h2>
+                    Batman!  Search a superhero to find out his/her secret identity and other facts!</h2>
                 <form onSubmit = {handleSubmit}>
                     <label>
                         
-                        <input id="text" type="text"  onChange={(e) => setSuperheroChoice(e.target.value)} />
+                        <input id="text" type="text"  onChange={handleChange} />
                     </label>
                     <input id="submit" type="submit" value="Submit" />
                 </form>
